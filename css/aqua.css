@@ -13,7 +13,7 @@ header {
   z-index: 3;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   transition: 0.5s;
-  /* header active */
+  /* pc hover */
 }
 header::after {
   content: "";
@@ -34,84 +34,30 @@ header .header-wrap {
   justify-content: space-between;
   align-items: center;
 }
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap h1 {
-    position: absolute;
-    left: 48px;
-    top: 12%;
-    z-index: 10;
-  }
+header .header-wrap h1 {
+  position: relative;
+  left: 48px;
 }
 header .header-wrap h1 img {
   transform: scale(0.7);
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap h1 img {
-    transform-origin: left center;
-  }
+  transform-origin: left center;
 }
 header .header-wrap nav {
   width: 60%;
 }
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap nav {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    z-index: 1;
-    padding: 100px 24px 0;
-  }
-}
 header .header-wrap nav ul {
   padding: 0;
   display: flex;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap nav ul {
-    flex-direction: column;
-  }
 }
 header .header-wrap nav ul li {
   width: 100%;
   text-align: center;
   position: relative;
 }
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap nav > ul > li {
-    width: 100%;
-    text-align: left;
-    position: relative;
-  }
-}
-@media (min-width: 768px) and (max-width: 1200px) and (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap nav > ul > li:hover > a::after {
-    width: 100%;
-  }
-}
-@media (min-width: 768px) and (max-width: 1200px) and (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap nav > ul > li:hover > a::before {
-    content: url(../img/main/more_arrow.svg);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-}
 header .header-wrap nav > ul > li > a {
   font-size: 16px;
   font-weight: 400;
   color: white;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap nav > ul > li > a::before {
-    content: url(../img/main/more_arrow.svg);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
 }
 header .header-wrap nav > ul > li > a::after {
   content: "";
@@ -130,23 +76,9 @@ header .header-wrap .drop-down-menu {
   flex-direction: column;
   display: none;
 }
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap .drop-down-menu {
-    position: static;
-    padding: 10px 0;
-    max-height: 0px;
-    overflow: hidden;
-    transition: 0.5s;
-  }
-}
 header .header-wrap .drop-down-menu li {
   width: 100%;
   margin: 5px 0;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap .drop-down-menu li {
-    text-align: left;
-  }
 }
 header .header-wrap .drop-down-menu li a {
   font-size: 15px;
@@ -160,18 +92,10 @@ header .header-wrap .header-ico-menu span {
   height: 1px;
 }
 header .header-wrap .trigger {
+  display: none;
   cursor: pointer;
   width: 25px;
   height: 25px;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header .header-wrap .trigger {
-    width: 25px;
-    position: absolute;
-    right: 48px;
-    top: 25%;
-    z-index: 10;
-  }
 }
 header .header-wrap .trigger span {
   display: block;
@@ -183,257 +107,49 @@ header .header-wrap .trigger span {
 header .header-wrap .trigger span.shortline {
   width: 70%;
 }
-header.active {
-  border-bottom: 1px solid black;
-}
-header.active::after {
-  display: block;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header.active::after {
-    display: none;
+@media (min-width: 1200px) {
+  header:hover {
+    border-bottom: 1px solid black;
   }
-}
-header.active .header-wrap .drop-down-menu {
-  display: block;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header.active .header-wrap nav {
+  header:hover::after {
     display: block;
   }
-}
-header.active .header-wrap nav ul li:hover a::after {
-  transform: translateY(100%);
-  font-weight: 600 !important;
-  width: 100%;
-  animation: line-1 0.7s 0.5s forwards;
-}
-@keyframes line-1 {
-  100% {
+  header:hover .header-wrap .drop-down-menu {
+    display: block;
+  }
+  header:hover .header-wrap nav ul li:hover a::after {
+    transform: translateY(100%);
+    font-weight: 600 !important;
+    width: 0%;
+    display: block;
+    animation: line-1 0.3s forwards;
+  }
+  @keyframes line-1 {
+    100% {
+      width: 100%;
+    }
+  }
+  header:hover nav ul li a {
+    color: black;
+    font-weight: 500 !important;
+  }
+  header:hover .drop-down-menu li a {
+    color: black;
+    font-weight: 300 !important;
+  }
+  header:hover .trigger > span {
+    display: block;
     width: 100%;
+    border-bottom: 1px solid black;
   }
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header.active .header-wrap nav ul li:hover .drop-down-menu {
-    padding: 30px 0;
-    max-height: 200px;
+  header:hover h1 img {
+    filter: brightness(0%);
   }
-}
-header.active nav ul li a {
-  color: black;
-  font-weight: 500 !important;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header.active nav ul li a {
-    font-weight: 400;
-  }
-}
-header.active .drop-down-menu li a {
-  color: black;
-  font-weight: 300 !important;
-}
-header.active .trigger > span {
-  display: block;
-  width: 100%;
-  border-bottom: 1px solid black;
-}
-@media (min-width: 768px) and (max-width: 1200px) {
-  header.active .trigger > span {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    transition: 0.3s;
-  }
-}
-@media (min-width: 768px) and (max-width: 1200px) and (min-width: 768px) and (max-width: 1200px) {
-  header.active .trigger > span:nth-of-type(1) {
-    transform: rotate(45deg);
-  }
-}
-@media (min-width: 768px) and (max-width: 1200px) and (min-width: 768px) and (max-width: 1200px) {
-  header.active .trigger > span:nth-of-type(2), header.active .trigger > span:nth-of-type(4) {
-    display: none;
-  }
-}
-@media (min-width: 768px) and (max-width: 1200px) and (min-width: 768px) and (max-width: 1200px) {
-  header.active .trigger > span:nth-of-type(3) {
-    transform: rotate(-45deg);
-  }
-}
-header.active h1 img {
-  filter: brightness(0%);
 }
 header.active2 {
   transform: translateY(-100%);
   transition: 1s;
   background: rgba(255, 255, 255, 0.3);
-}
-@media (max-width: 767px) {
-  header {
-    width: 100%;
-    margin: 0 auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    /* header active */
-  }
-  header::after {
-    content: "";
-    display: block;
-    background-color: white;
-    width: 100vw;
-    height: 233px;
-    position: absolute;
-    top: 0%;
-    z-index: -1;
-    display: none;
-  }
-  header .header-wrap {
-    max-width: 1440px;
-    height: 80px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  header .header-wrap h1 {
-    position: absolute;
-    left: 24px;
-    top: 12%;
-    z-index: 10;
-  }
-  header .header-wrap h1 img {
-    transform: scale(0.7);
-    transform-origin: left center;
-  }
-  header .header-wrap nav {
-    position: fixed;
-    left: 0;
-    top: 0px;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    z-index: 1;
-    padding: 100px 24px 0;
-    display: none;
-  }
-  header .header-wrap nav ul {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  header .header-wrap nav > ul > li {
-    width: 100%;
-    text-align: left;
-    position: relative;
-  }
-  header .header-wrap nav > ul > li:hover > a::after {
-    width: 100%;
-  }
-  header .header-wrap nav > ul > li:hover > a::before {
-    content: url(../img/main/more_arrow.svg);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  header .header-wrap nav > ul > li > a::before {
-    content: url(../img/main/more_arrow.svg);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  header .header-wrap .drop-down-menu {
-    position: static;
-    top: 100%;
-    left: 0%;
-    width: 100%;
-    padding: 10px 0;
-    display: flex;
-    flex-direction: column;
-    max-height: 0px;
-    overflow: hidden;
-    transition: 0.5s;
-  }
-  header .header-wrap .drop-down-menu li {
-    width: 100%;
-    margin: 5px 0;
-    text-align: left;
-  }
-  header .header-wrap .drop-down-menu li a {
-    font-size: 15px;
-    font-weight: 200;
-  }
-  header .header-wrap .drop-down-menu li a:hover {
-    font-weight: 500 !important;
-  }
-  header .header-wrap .header-ico-menu span {
-    width: 45%;
-    height: 1px;
-  }
-  header .header-wrap .trigger {
-    width: 25px;
-    position: absolute;
-    right: 24px;
-    top: 25%;
-    z-index: 10;
-  }
-  header .header-wrap .trigger span {
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid white;
-    border-radius: 3px;
-    margin: 6px 0;
-  }
-  header .header-wrap .trigger span.shortline {
-    width: 70%;
-  }
-  header.active {
-    border-bottom: 1px solid black;
-  }
-  header.active::after {
-    display: none;
-  }
-  header.active .header-wrap .drop-down-menu {
-    display: block;
-  }
-  header.active .header-wrap nav {
-    display: block;
-  }
-  header.active .header-wrap nav ul li:hover .drop-down-menu {
-    padding: 30px 0;
-    max-height: 200px;
-  }
-  header.active nav ul li a {
-    color: black;
-    font-weight: 400 !important;
-  }
-  header.active .drop-down-menu li a {
-    color: black;
-    font-weight: 300 !important;
-  }
-  header.active .trigger > span {
-    display: block;
-    position: absolute;
-    top: 10px;
-    left: 0;
-    width: 100%;
-    border-bottom: 2px solid black;
-    transition: 0.3s;
-  }
-  header.active .trigger > span:nth-of-type(1) {
-    transform: rotate(45deg);
-  }
-  header.active .trigger > span:nth-of-type(2), header.active .trigger > span:nth-of-type(4) {
-    display: none;
-  }
-  header.active .trigger > span:nth-of-type(3) {
-    transform: rotate(-45deg);
-  }
-  header.active h1 img {
-    filter: brightness(0%);
-  }
 }
 
 /* footer */
@@ -756,6 +472,113 @@ h2 {
   }
 }
 
+@media (max-width: 1200px) {
+  header .header-wrap h1 {
+    position: absolute;
+    left: 48px;
+    top: 12%;
+    z-index: 10;
+  }
+  header .header-wrap nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 1;
+    padding: 100px 48px 0px;
+    display: none;
+  }
+  header .header-wrap nav ul {
+    flex-direction: column;
+  }
+  header .header-wrap nav > ul > li {
+    width: 100%;
+    text-align: left;
+    position: relative;
+  }
+  header .header-wrap nav > ul > li > a::before {
+    content: url(../img/main/more_arrow.svg);
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  header .header-wrap .drop-down-menu {
+    position: static;
+    padding: 10px 0;
+    max-height: 0px;
+    overflow: hidden;
+    transition: 0.5s;
+  }
+  header .header-wrap .drop-down-menu li {
+    text-align: left;
+  }
+  header .header-wrap .trigger {
+    display: block;
+    width: 25px;
+    position: absolute;
+    right: 48px;
+    top: 25%;
+    z-index: 10;
+  }
+  header.active::after {
+    display: block;
+    display: none;
+  }
+  header.active .header-wrap .drop-down-menu {
+    display: block;
+  }
+  header.active .header-wrap nav {
+    display: block;
+  }
+  header.active .header-wrap nav ul li.active a::after {
+    transform: translateY(100%);
+    font-weight: 600 !important;
+    width: 0%;
+    display: block;
+    margin: 0;
+    animation: line-1 0.3s forwards;
+  }
+  @keyframes line-1 {
+    100% {
+      width: 100%;
+    }
+  }
+  header.active .header-wrap nav ul li.active .drop-down-menu {
+    padding: 30px 0;
+    max-height: 200px;
+  }
+  header.active nav ul li a {
+    color: black;
+    font-weight: 400 !important;
+  }
+  header.active .drop-down-menu li a {
+    color: black;
+    font-weight: 300 !important;
+  }
+  header.active .trigger > span {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid black;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    transition: 0.3s;
+  }
+  header.active .trigger > span:nth-of-type(1) {
+    transform: rotate(45deg);
+  }
+  header.active .trigger > span:nth-of-type(2), header.active .trigger > span:nth-of-type(4) {
+    display: none;
+  }
+  header.active .trigger > span:nth-of-type(3) {
+    transform: rotate(-45deg);
+  }
+  header.active h1 img {
+    filter: brightness(0%);
+  }
+}
 /* main content */
 .content_ {
   /* 최신 수행연구 카드리스트 */

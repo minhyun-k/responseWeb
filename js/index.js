@@ -1,12 +1,12 @@
 const elMain = document.querySelector('main');
 const elIndi = document.querySelectorAll('.section-paging ul li');
 const elArticle = document.querySelectorAll('article');
-
-const pos = {y:0, dy:0, state:true};
-
-
-let init = ()=>{
+    
+// 카카오 맵 리사이징 (반응형) 미디어쿼리
+const t = window.matchMedia('(max-width:1199px)');
+   
 // 인디게이터 활성화
+let init = ()=>{
     let update = (n)=>{
        
         // elIndi[0].classList.remove('active');
@@ -21,7 +21,6 @@ let init = ()=>{
         
     }
         
- 
     //인디게이터 클릭 이동
     elIndi.forEach((ele,i)=>{
         ele.addEventListener('click',function(e){
@@ -33,28 +32,40 @@ let init = ()=>{
         })
     })
 
-
+    
     //마우스 휠 nextElmentsbling(형제찾기), offsetTop(세로값), 마지막은 윈도우 이너헤잇- 푸터값빼주기
+    let t_device = t.matches; //t_devie는 태블릿 이하 사이즈에서 휠 기능 없애기
+
     elArticle.forEach((article,i)=>{
         article.addEventListener('wheel',function(e){
             try{
-                let idx, num=i;
-                if(e.deltaY > 0){
-                    if(this.nextElementSibling.tagName!=="FOOTER"){
-                        idx = this.nextElementSibling.offsetTop;
-                        num++;                         
+                if(!t_device){
+                    let idx, num=i;
+                    if(e.deltaY > 0){
+                        if(this.nextElementSibling.tagName!=="FOOTER"){
+                            idx = this.nextElementSibling.offsetTop;
+                            num++;                         
+                        }else{
+                            idx = this.nextElementSibling.offsetTop - (window.innerHeight-this.nextElementSibling.offsetHeight);
+                        }
                     }else{
-                        idx = this.nextElementSibling.offsetTop - (window.innerHeight-this.nextElementSibling.offsetHeight);
-                    }
+                        idx = this.previousElementSibling.offsetTop;
+                        num--;                  
+                    }               
+                    
+                    elMain.style=`transform:translateY(-${idx}px)`;
+                    update(num);
                 }else{
-                    idx = this.previousElementSibling.offsetTop;
-                    num--;                  
-                }                    
-                elMain.style=`transform:translateY(-${idx}px)`;
-                update(num);
+                    elMain.style=`transform:translateY(-0px)`; //t_devie는 태블릿 이하 사이즈에서 휠 기능 없애고 0픽셀로 가라
+                }
             }catch{}
         });
     });
+    //테블릿에서 리사이징시 휠 기능없어지고 0픽셀로 가라
+    t.onchange = function (e){
+        t_device = e.matches ? true : false;
+        if(t_device)  elMain.style=`transform:translateY(-0px)`;
+    }
     
 }
 window.addEventListener('load',init)
@@ -88,10 +99,15 @@ fetch("./data/index.json")
 
     dataFun(0);// 첫 화면에 0을 보여줘라
 
-    const menuLi = document.querySelectorAll('.tab-nav li a');
+
+    //구조치료실적 리스트 탭 활성화, 데이터 저장
+    const menuLi = document.querySelectorAll('.tab-nav li a'),
+          localBtn = document.querySelector('.figure-wrap > span > a');
 
     menuLi.forEach((v,i) => {  
      v.onclick=(function(e){
+        localStorage.rescue = JSON.stringify( {  status : false, name:this.dataset.name } );
+        console.log(JSON.parse(localStorage.rescue));
             menuLi.forEach(function(item,i){
                 item.classList.remove('active'); //모두를 빼줘라
             });
@@ -101,18 +117,17 @@ fetch("./data/index.json")
         dataFun(i);
         
      });
+     localBtn.onclick = function(e){
+        aBtn = JSON.parse(localStorage.rescue);   //localStorage.rescue의 값을 불러와서 JSON의 객체 형태로 만들어줘(parse)
+        aBtn.status = true;
+        localStorage.rescue = JSON.stringify( aBtn );
+        console.log(JSON.parse(localStorage.rescue));
+  }
     });
-
- });
-
-
-
-
-
+  });
 
 
  //카카오 지도 자바스크립트
-
  // 마커를 담을 배열입니다
  var markers = [],ea=5;
 
@@ -123,6 +138,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     }; 
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
+
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
@@ -228,6 +244,7 @@ function displayPlaces(places) {
     map.setBounds(bounds);
 }
 
+
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
 
@@ -315,7 +332,8 @@ function displayPagination(pagination) {
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
 function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+    
+    var content = '<div style="color:black;text-align: center !important; padding:10px; z-index:1; font-size:14px;">' + title + '</div>';
 
     infowindow.setContent(content);
     infowindow.open(map, marker);
@@ -327,3 +345,18 @@ function removeAllChildNods(el) {
         el.removeChild (el.lastChild);
     }
 }
+
+//로컬 데이터 값 저장 (보전활동대상생물)
+const localSave = document.querySelectorAll('.icon-box > ul > li  span')
+
+localSave.forEach((item, i)=>{
+item.onclick = (e)=>{
+    //e.preventDefault();
+    localStorage.setItem('animal', item.dataset.name)
+    console.log(item.dataset.name)
+    console.log(
+        localStorage.getItem('animal')
+    ) 
+}
+});
+

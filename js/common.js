@@ -6,12 +6,21 @@ let nav = ()=>{
     const spanClose= document.querySelector('.longline');
     const elHeader= document.querySelector('header');
     const elArticle = document.querySelectorAll('article');
+    const btnNav= document.querySelectorAll('header nav > ul > li');
     
     let toggleFun = function(){
-        elHeader.classList.toggle('active');   
+        elHeader.classList.toggle('active'); 
     }
     btnClose.onclick = toggleFun;
     spanClose.onclick = toggleFun;
+
+    btnNav.forEach((navLi,i)=>{
+        navLi.onclick = function(e){
+            // e.preventDefault();
+            btnNav.forEach((delLi)=>{delLi.classList.remove('active')});
+            this.classList.add('active'); 
+        }
+    })
 
 
 //마우스 휠 기능시 내릴때 숨고 올릴때 생기고 올릴때 하얀배경색
