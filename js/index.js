@@ -352,7 +352,7 @@ const localSave = document.querySelectorAll('.icon-box > ul > li  span')
 localSave.forEach((item, i)=>{
 item.onclick = (e)=>{
     //e.preventDefault();
-    localStorage.setItem('animal', item.dataset.name)
+    localStorage.setItem('animal', JSON.stringify({state:true,name:item.dataset.name}) )
     console.log(item.dataset.name)
     console.log(
         localStorage.getItem('animal')
